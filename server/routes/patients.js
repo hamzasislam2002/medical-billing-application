@@ -4,14 +4,14 @@ const db = require('../db');
 
 // GET /patients — fetch all patients
 router.get('/', async (req, res) => {
-  try {
-    const result = await db.query('SELECT * FROM patients');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
-  }
-});
+    try {
+      const result = await db.query('SELECT * FROM patients ORDER BY id DESC');
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to fetch patients' });
+    }
+  });
 
 router.post('/', async (req, res) => {
     const { name, email, date_of_birth } = req.body;
